@@ -19,12 +19,25 @@ export default function App() {
         );
         const json = await response.json();
         console.log(json);
+        console.log(controller.signal);
       } catch (error) {
         console.log(error);
       }
     }
     fetchUsers();
+    return () => {
+      controller.abort();
+      console.log(controller.signal);
+    };
   });
+
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    let timer = setTimeout(() => setShow(true), 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div>
