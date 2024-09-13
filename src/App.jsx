@@ -31,14 +31,6 @@ export default function App() {
     };
   });
 
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    let timer = setTimeout(() => setShow(true), 3000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
-
   return (
     <div>
       <div>You clicked the button {counter} times</div>
