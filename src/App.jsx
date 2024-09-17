@@ -1,51 +1,69 @@
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const [counter, setCounter] = useState(0);
-  const [sync, setSync] = useState(false);
-
-  useEffect(() => {
-    console.log("Rendering...");
-    document.title = "React Tutorial" + counter;
-  }, [sync]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    async function fetchUsers() {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users",
-          { signal: controller.signal }
-        );
-        const json = await response.json();
-        console.log(json);
-        console.log(controller.signal);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchUsers();
-    return () => {
-      controller.abort();
-      console.log(controller.signal);
-    };
+  const [blodPostData, setBlodPostData] = useState({
+    title: "",
+    body: "",
   });
 
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    let timer = setTimeout(() => setShow(true), 3000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+  console.log(blodPostData);
 
   return (
     <div>
-      <div>You clicked the button {counter} times</div>
-      <button onClick={() => setCounter((count) => count + 1)}>Click me</button>
-      <button onClick={() => setSync((currentSync) => !currentSync)}>
-        Sync
-      </button>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (blodPostData.title && blodPostData.body) {
+            fetch("https://jsonplaceholder.typicode.com/posts", {
+              method: "POST",
+              body: JSON.stringify({
+                userId: 1,
+                title: blodPostData.title,
+                body: blodPostData.body,
+              }),
+              headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                console.log("Success!");
+                console.log(data);
+              })
+              .catch((err) => console.log(err));
+          }
+        }}
+      >
+        <div>
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            value={blodPostData.title}
+            onChange={(e) => {
+              setBlodPostData((currentBlogPostData) => ({
+                ...currentBlogPostData,
+                title: e.target.value,
+              }));
+            }}
+          />
+        </div>
+        <div>
+          <label htmlFor="body">Body</label>
+          <input
+            type="text"
+            id="body"
+            value={blodPostData.body}
+            onChange={(e) => {
+              setBlodPostData((currentBlogPostData) => ({
+                ...currentBlogPostData,
+                body: e.target.value,
+              }));
+            }}
+          />
+        </div>
+        <button>Create Post</button>
+      </form>
     </div>
   );
 }
