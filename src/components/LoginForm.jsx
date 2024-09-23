@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDocumentClick } from "./utils hooks/useDocumentClick";
+// import { useDocumentClick }
 
 export function LoginForm() {
   useEffect(() => {
@@ -13,7 +13,7 @@ export function LoginForm() {
       window.removeEventListener("resize", resizeEventHandler);
     };
   }, []);
-  useDocumentClick();
+  // useDocumentClick();
   return (
     <form
       onSubmit={(e) => {
