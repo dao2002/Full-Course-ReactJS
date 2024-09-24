@@ -6,4 +6,3 @@ export const UserContext = createContext({
   email: "",
   displayName: "",
 });
-UserContext.Provider;

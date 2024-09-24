@@ -1,9 +1,8 @@
-import PostContentButtons from "./PostContentButtons";
+import { useContext } from "react";
+import { UserContext } from "../utils/contexts/UserContext";
+import { PostContentButtons } from "./PostContentButtons";
 
-export default function PostContent({ data }) {
-  return (
-    <div>
-      <PostContentButtons data={data} />
-    </div>
-  );
+export function PostContent({ data }) {
+  const userContextData = useContext(UserContext);
+  return <div>{userContextData.email}</div>;
 }

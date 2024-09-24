@@ -1,5 +1,7 @@
-import React from "react";
+import { useContext } from "react";
+import { UserContext } from "../utils/contexts/UserContext";
 
-export default function PostContentButtons({ data }) {
-  return <div>{data}</div>;
+export function PostContentButtons() {
+  const userContextData = useContext(UserContext);
+  return <div>{userContextData.id}</div>;
 }
