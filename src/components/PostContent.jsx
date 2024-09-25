@@ -6,6 +6,9 @@ export function PostContent({ data }) {
   const userContextData = useContext(UserContext);
   return (
     <div>
+      <div>
+        <span>PostContent</span>
+      </div>
       <PostContentButtons />
       {userContextData.email}
     </div>
