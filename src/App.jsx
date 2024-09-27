@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PostContainer } from "./components/PostContainer";
 import { PostContentButtons } from "./components/PostContentButtons";
 import { UserContext } from "./utils/contexts/UserContext";
+import { useFecthUser } from "./utils/hooks/useFecthUser";
 
 export default function App() {
-  const [userData, setUserData] = useState({
-    id: 1,
-    username: "trongdao",
-    email: "trongdao2000@gmail.com",
-    displayName: "TrongDao",
-  });
+  const { user, loading, error } = useFecthUser(2);
+
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    if (!loading && !error && user) setUserData(user);
+  }, [loading, error, user]);
+
   return (
     <>
       <UserContext.Provider value={{ ...userData, setUserData }}>
-        <div>
-          <PostContainer />
-        </div>
+        <div>{loading ? "Loading..." : <PostContainer />}</div>
       </UserContext.Provider>
     </>
   );
