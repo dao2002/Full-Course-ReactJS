@@ -3,15 +3,18 @@ import { PostContainer } from "./components/PostContainer";
 import { PostContentButtons } from "./components/PostContentButtons";
 import { UserContext } from "./utils/contexts/UserContext";
 import { useFecthUser } from "./utils/hooks/useFecthUser";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export default function App() {
   const { user, loading, error } = useFecthUser(2);
 
   const [userData, setUserData] = useState();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!loading && !error && user) setUserData(user);
+    navigate("/users");
   }, [loading, error, user]);
 
   return (
